@@ -79,3 +79,4 @@ jobs:
 
             - name: deployment on vercel
               run: vercel deploy dist --prod --yes --token="${{secrets.VERCEL_TOKEN}}"        
+              
