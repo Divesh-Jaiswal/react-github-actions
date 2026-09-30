@@ -26,32 +26,26 @@ jobs:
     #         - name: run ESLint in app
     #           run: npm run lint
 
-    # test-job:
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - name: checkout
-    #           uses: actions/checkout@v4
+    test-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
 
-    #         - name: "setup node js in VM "
-    #           uses: actions/setup-node@v4
-    #           with:
-    #             node-version: 24
-    #             cache: npm
+            - name: "setup node js in VM "
+              uses: actions/setup-node@v4
+              with:
+                node-version: 24
+                cache: npm
 
-    #         - name: install dependency
-    #           run: npm ci
+            - name: install dependency
+              run: npm ci
             
-    #         - name: run test cases
-    #           run: npm run test
+            - name: run test cases
+              run: npm run test
     build-job:
         # needs: [lint-job,test-job]
         runs-on: ubuntu-latest
-
-        env:
-            VERCEL_ORG_ID: "${{secrets.VERCEL_ORG_ID}}"
-            VERCEL_PROJECT_ID: "${{secrets.VERCEL_PROJECT_ID}}"
-
-
         steps:
             - name: checkout
               uses: actions/checkout@v4
@@ -72,10 +66,17 @@ jobs:
               with:
                    name: react-build
                    path: dist/
-                   retention-days: 7  
-            
+                   retention-days: 7          
+
+    deploy-job:
+        # needs: [lint-job,test-job,build-job]
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
+
             - name: "Install vercel cli"    
               run: npm install --global vercel
 
             - name: deployment on vercel
-              run: vercel --prod --yes --token="${{secrets.VERCEL_TOKEN}}"        
+              run: vercel --prod --yes --token="${{secrets.VERCEL_TOKEN}}"
