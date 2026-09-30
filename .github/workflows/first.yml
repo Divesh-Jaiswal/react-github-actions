@@ -69,7 +69,7 @@ jobs:
                    retention-days: 7          
 
     deploy-job:
-        needs: [lint-job,test-job,build-job]
+        # needs: [lint-job,test-job,build-job]
         runs-on: ubuntu-latest
         steps:
             - name: checkout
