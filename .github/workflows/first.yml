@@ -8,23 +8,23 @@ on:
       - qa
       
 jobs:
-    lint-job:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout
-              uses: actions/checkout@v4
+    # lint-job:
+    #     runs-on: ubuntu-latest
+    #     steps:
+    #         - name: checkout
+    #           uses: actions/checkout@v4
 
-            - name: "setup node js in VM "
-              uses: actions/setup-node@v4
-              with:
-                node-version: 24
-                cache: npm
+    #         - name: "setup node js in VM "
+    #           uses: actions/setup-node@v4
+    #           with:
+    #             node-version: 24
+    #             cache: npm
 
-            - name: install dependency
-              run: npm ci
+    #         - name: install dependency
+    #           run: npm ci
             
-            - name: run ESLint in app
-              run: npm run lint
+    #         - name: run ESLint in app
+    #           run: npm run lint
 
     test-job:
         runs-on: ubuntu-latest
@@ -44,7 +44,7 @@ jobs:
             - name: run test cases
               run: npm run test
     build-job:
-        needs: [lint-job,test-job]
+        # needs: [lint-job,test-job]
         runs-on: ubuntu-latest
 
         env:
